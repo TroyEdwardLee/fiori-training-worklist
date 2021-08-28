@@ -1,0 +1,56 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:fm="sap.ui.layout.form" xmlns:layout="sap.ui.layout">
+	<Dialog id="addDialogId" title="New Employee" class="sapUiResponsiveContentPadding" titleAlignment="Center"
+		afterOpen="handleAddDialogAfterOpen" afterClose="handleAddDialogAfterClose" icon="sap-icon://add-employee" state="Information">
+		<content>
+			<fm:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="4" labelSpanL="4" labelSpanM="8"
+				labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1"
+				singleContainerFullSize="false">
+				<fm:content>
+					<Label text="Employee ID"/>
+					<Input value="{viewModel>/maintainEmployee/Id}" editable="false">
+						<layoutData>
+							<layout:GridData span="XL4 L4 M4 S12"/>
+						</layoutData>
+					</Input>
+					<Label text="Name"/>
+					<Input maxLength="10" value="{viewModel>/maintainEmployee/Name}">
+						<layoutData>
+							<layout:GridData span="XL4 L4 M4 S12"/>
+						</layoutData>
+					</Input>
+					<Label text="Age"/>
+					<Input maxLength="3" type="Number" value="{viewModel>/maintainEmployee/Age}">
+						<layoutData>
+							<layout:GridData span="XL4 L4 M4 S12"/>
+						</layoutData>
+					</Input>
+					<Label text="Hire Date"/>
+					<DatePicker value="{
+							path: 'viewModel>/maintainEmployee/Birthdate',
+							type:'sap.ui.model.type.Date',
+							formatOptions: {
+					            style: 'medium', strictParsing: true, UTC: true
+					        }
+						}" valueFormat="yyyy-MM-dd"
+						displayFormat="long">
+						<layoutData>
+							<layout:GridData span="XL4 L4 M4 S12"/>
+						</layoutData>
+					</DatePicker>
+					<Label text="Address"/>
+					<TextArea maxLength="50" value="{viewModel>/maintainEmployee/Address}" rows="4">
+						<layoutData>
+							<layout:GridData span="XL4 L4 M4 S12"/>
+						</layoutData>
+					</TextArea>
+				</fm:content>
+			</fm:SimpleForm>
+		</content>
+		<beginButton>
+			<Button type="Emphasized" text="Confirm" press="handleConfirmAdd"/>
+		</beginButton>
+		<endButton>
+			<Button text="Cancel" press="handleCancelOpreation"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

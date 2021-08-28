@@ -1,0 +1,139 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:fb="sap.ui.comp.filterbar"
+	xmlns:uiTable="sap.ui.table" xmlns:f="sap.f"
+	controllerName="fiori.training.worklist.controller.List" xmlns:html="http://www.w3.org/1999/xhtml">
+	<f:DynamicPage id="dynamicPageId" headerExpanded="true" busyIndicatorDelay="0" showFooter="false">
+		<f:title>
+			<f:DynamicPageTitle class="pageTitleContainer">
+				<f:heading>
+					<Title text="{i18n>listTitle}"></Title>
+				</f:heading>
+			</f:DynamicPageTitle>
+		</f:title>
+		<f:header>
+			<f:DynamicPageHeader pinnable="true">
+				<f:content>
+					<fb:FilterBar id="filterBarId" search="onSearch" clear="handleFilterClearPress"
+						showRestoreButton="true" showClearOnFB="true" busyIndicatorDelay="0">
+						<fb:filterGroupItems>
+							<fb:FilterGroupItem groupName="firstGroup" name="Product" label="Product Name" visibleInFilterBar="true">
+								<fb:control>
+									<Input id="productNameInputId" showValueHelp="true" showSuggestion="true"
+										busyIndicatorDelay="0" valueHelpRequest="handlePrdNameValueHelp"
+										value="{viewModel>/filters/ProductName}"
+										suggestionItems="{ path: 'businessModel>/ProductNameF4', sorter: { path: 'ProductID' } }">
+										<suggestionItems>
+											<core:ListItem key="{businessModel>ProductID}" text="{businessModel>ProductName}"
+												additionalText="{businessModel>ProductID}"/>
+										</suggestionItems>
+									</Input>
+								</fb:control>
+							</fb:FilterGroupItem>
+							<fb:FilterGroupItem groupName="firstGroup" name="Supplier" label="Supplier" visibleInFilterBar="true">
+								<fb:control>
+									<MultiComboBox
+										maxWidth="20rem"
+										showSecondaryValues="true"
+										selectedKeys="{viewModel>/filters/SupplierID}"
+										items="{
+											path: 'businessModel>/SupplierF4',
+											sorter: { path: 'SupplierID' }
+										}">
+										<core:ListItem key="{businessModel>SupplierID}" text="{businessModel>CompanyName}"
+											additionalText="{businessModel>SupplierID}"/>
+									</MultiComboBox>
+								</fb:control>
+							</fb:FilterGroupItem>
+						</fb:filterGroupItems>
+					</fb:FilterBar>
+				</f:content>
+			</f:DynamicPageHeader>
+		</f:header>
+		<f:content>
+			<uiTable:Table id="productTableId" visibleRowCountMode="Auto"
+				rowActionCount="1" busyIndicatorDelay="0"
+				rows="{ path: 'businessModel>/Products', sorter: { path: 'ProductID' } }"
+				ariaLabelledBy="title">
+				<uiTable:extension>
+					<OverflowToolbar>
+						<content>
+							<Title text="{viewModel>/sTableTitle}" level="H2"/>
+							<ToolbarSpacer />
+							<!--<Button icon="sap-icon://add" tooltip="Add Product Name" press="handleAddPress"/>
+							<Button icon="sap-icon://user-edit" tooltip="Edit Product Name" press="handleEditPress"
+								enabled="{=${viewModel>/iTableSelectedLen} !== 0}"/>
+							<Button icon="sap-icon://delete" tooltip="Delete Product Name" press="handleDeletePress"
+								enabled="{=${viewModel>/iTableSelectedLen} !== 0}"/>-->
+						</content>
+					</OverflowToolbar>
+				</uiTable:extension>
+				<uiTable:rowActionTemplate>
+					<uiTable:RowAction>
+						<uiTable:items>
+							<uiTable:RowActionItem type="Navigation" press="handleListItemPress"></uiTable:RowActionItem>
+					    </uiTable:items>
+					</uiTable:RowAction>
+				</uiTable:rowActionTemplate>
+				<uiTable:columns>
+					<uiTable:Column minWidth="6rem" autoResizable="true">
+						<Label text="Product ID"/>
+						<uiTable:template>
+							<ObjectIdentifier title="{businessModel>ProductID}"/>
+						</uiTable:template>
+					</uiTable:Column>
+					<uiTable:Column minWidth="14rem" autoResizable="true">
+						<Label text="Product Name"/>
+						<uiTable:template>
+							<Text text="{businessModel>ProductName}" wrapping="false"/>
+						</uiTable:template>
+					</uiTable:Column>
+					<uiTable:Column minWidth="14rem" autoResizable="true">
+						<Label text="Supplier"/>
+						<uiTable:template>
+							<Text text="{businessModel>Supplier/CompanyName}" wrapping="false"/>
+						</uiTable:template>
+					</uiTable:Column>
+					<uiTable:Column minWidth="14rem" autoResizable="true">
+						<Label text="Quantity Per Unit"/>
+						<uiTable:template>
+							<Text text="{businessModel>QuantityPerUnit}"/>
+						</uiTable:template>
+					</uiTable:Column>
+					<uiTable:Column minWidth="7rem" autoResizable="true">
+						<Label text="Unit Price"/>
+						<uiTable:template>
+							<Text text="{businessModel>UnitPrice}"/>
+						</uiTable:template>
+					</uiTable:Column>
+					<uiTable:Column minWidth="7rem" autoResizable="true">
+						<Label text="Units In Stock"/>
+						<uiTable:template>
+							<Text text="{businessModel>UnitsInStock}"/>
+						</uiTable:template>
+					</uiTable:Column>
+					<uiTable:Column minWidth="7rem" autoResizable="true">
+						<Label text="Units On Order"/>
+						<uiTable:template>
+							<Text text="{businessModel>UnitsOnOrder}"/>
+						</uiTable:template>
+					</uiTable:Column>
+					<uiTable:Column minWidth="7rem" autoResizable="true">
+						<Label text="Discontinued"/>
+						<uiTable:template>
+							<ObjectStatus
+								text="{
+									path: 'businessModel>Discontinued',
+									formatter: '.formatter.convertPrdStateText'
+								}"
+								icon="{=${businessModel>Discontinued} === false ? 'sap-icon://cancel' : 'sap-icon://line-chart-time-axis'}"
+								state="{=${businessModel>Discontinued} === false ? 'Error' : 'Success'}" />
+							<!--<ObjectStatus
+								text="{=${businessModel>Discontinued} === false ? 'Discontinued' : 'Continue'}"
+								icon="{=${businessModel>Discontinued} === false ? 'sap-icon://cancel' : 'sap-icon://line-chart-time-axis'}"
+								state="{=${businessModel>Discontinued} === false ? 'Error' : 'Success'}" />-->
+						</uiTable:template>
+					</uiTable:Column>
+				</uiTable:columns>
+			</uiTable:Table>
+		</f:content>
+	</f:DynamicPage>
+</mvc:View>

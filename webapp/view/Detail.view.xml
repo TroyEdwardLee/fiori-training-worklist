@@ -1,0 +1,118 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:f="sap.f" xmlns:layout="sap.ui.layout"
+	xmlns:fm="sap.ui.layout.form"
+	controllerName="fiori.training.worklist.controller.Detail" xmlns:html="http://www.w3.org/1999/xhtml">
+	<f:DynamicPage id="dynamicPageId" headerExpanded="{device>/system/desktop}" busyIndicatorDelay="0" showFooter="false">
+		<f:title>
+			<f:DynamicPageTitle>
+				<f:heading>
+					<Title text="{
+						parts: [{path: 'ProductID'},{path: 'ProductName'}],
+						formatter: '.formatter.jonitDetailTitle'
+					}"/>
+				</f:heading>
+			</f:DynamicPageTitle>
+		</f:title>
+		<f:header>
+			<f:DynamicPageHeader pinnable="true">
+				<layout:HorizontalLayout allowWrapping="true">
+					<layout:VerticalLayout>
+						<ObjectAttribute title="Category ID"/>
+						<ObjectStatus text="{CategoryID}"/>
+					</layout:VerticalLayout>
+				</layout:HorizontalLayout>
+			</f:DynamicPageHeader>
+		</f:header>
+		<f:content>
+			<Panel>
+				<content>
+					<fm:SimpleForm id="supplierSimpleFormId" editable="true" layout="ResponsiveGridLayout" title="Product Detail"
+						labelSpanXL="4" labelSpanL="4" labelSpanM="6" labelSpanS="12" adjustLabelSpan="false"
+						emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="2"
+						columnsL="2" columnsM="2" singleContainerFullSize="false">
+						<fm:content>
+							<core:Title text="Supplier Basic Info"/>
+							<Label text="Supplier ID"/>
+							<Input value="{Supplier/SupplierID}" editable="{viewModel>/bEditState}">
+								<layoutData>
+									<layout:GridData span="XL6 L6 M6 S12"/>
+								</layoutData>
+							</Input>
+							<Label text="Supplier Name"/>
+							<Input value="{Supplier/CompanyName}" editable="{viewModel>/bEditState}">
+								<layoutData>
+									<layout:GridData span="XL6 L6 M6 S12"/>
+								</layoutData>
+							</Input>
+							<Label text="Contact Name"/>
+							<Input value="{Supplier/ContactName}" editable="{viewModel>/bEditState}">
+								<layoutData>
+									<layout:GridData span="XL6 L6 M6 S12"/>
+								</layoutData>
+							</Input>
+							<Label text="Contact Title"/>
+							<Input value="{Supplier/ContactTitle}" editable="{viewModel>/bEditState}">
+								<layoutData>
+									<layout:GridData span="XL6 L6 M6 S12"/>
+								</layoutData>
+							</Input>
+							<Label text="Phone"/>
+							<Input value="{Supplier/Phone}" editable="{viewModel>/bEditState}">
+								<layoutData>
+									<layout:GridData span="XL6 L6 M6 S12"/>
+								</layoutData>
+							</Input>
+							<Label text="Fax"/>
+							<Input value="{Supplier/Fax}" editable="{viewModel>/bEditState}">
+								<layoutData>
+									<layout:GridData span="XL6 L6 M6 S12"/>
+								</layoutData>
+							</Input>
+							<core:Title text="Supplier Address Info"/>
+							<Label text="Country"/>
+							<Input value="{Supplier/Country}" editable="{viewModel>/bEditState}">
+								<layoutData>
+									<layout:GridData span="XL6 L6 M6 S12"/>
+								</layoutData>
+							</Input>
+							<Label text="City"/>
+							<Input value="{Supplier/City}" editable="{viewModel>/bEditState}">
+								<layoutData>
+									<layout:GridData span="XL6 L6 M6 S12"/>
+								</layoutData>
+							</Input>
+							<Label text="Region"/>
+							<Input value="{Supplier/Region}" editable="{viewModel>/bEditState}">
+								<layoutData>
+									<layout:GridData span="XL6 L6 M6 S12"/>
+								</layoutData>
+							</Input>
+							<Label text="Postal Code"/>
+							<Input value="{Supplier/PostalCode}" editable="{viewModel>/bEditState}">
+								<layoutData>
+									<layout:GridData span="XL6 L6 M6 S12"/>
+								</layoutData>
+							</Input>
+							<Label text="Address"/>
+							<TextArea value="{Supplier/Address}" editable="{viewModel>/bEditState}" rows="4">
+								<layoutData>
+									<layout:GridData span="XL6 L6 M6 S12"/>
+								</layoutData>
+							</TextArea>
+						</fm:content>
+					</fm:SimpleForm>
+				</content>
+			</Panel>
+		</f:content>
+		<f:footer>
+			<OverflowToolbar>
+				<ToolbarSpacer/>
+				<Button type="Emphasized" text="Edit" visible="{=!${viewModel>/bEditState}}"
+					press="handleEditPress"/>
+				<Button type="Accept" text="Save" visible="{viewModel>/bEditState}"
+					press="handleSavePress"/>
+				<Button type="Default" text="Cancel" visible="{viewModel>/bEditState}"
+					press="handleCancelPress"/>
+			</OverflowToolbar>
+		</f:footer>
+	</f:DynamicPage>
+</mvc:View>
